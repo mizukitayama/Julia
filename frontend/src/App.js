@@ -4,8 +4,8 @@ import './App.css';
 function App() {
   const [data, setData] = useState([]);
   const canvasRef = React.useRef(null);
-  const width = 1000; // このサイズは変更できます
-  const height = 1000;
+  const width = 500;
+  const height = 500;
 
   function fetchJuliaData(min_x, max_x, min_y, max_y, comp_const_re, comp_const_im) {
     fetch(`http://localhost:8000/api/julia/${min_x}/${max_x}/${min_y}/${max_y}/${comp_const_re}/${comp_const_im}/`)
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={() => fetchJuliaData(-0.5, 0.5, -0.5, 0.5, -0.33, 0.64)}>Load Julia Set</button>
+      <button onClick={() => fetchJuliaData(-1.5, 1.5, -1.5, 1.5, -0.33, 0.64)}>Load Julia Set</button>
       <canvas ref={canvasRef} width={width} height={height}></canvas>
     </div>
   );
