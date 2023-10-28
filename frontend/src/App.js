@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import './App.css';
 
 function App() {
-  const [data, setData] = useState([]);
   const canvasRef = React.useRef(null);
   const width = 500;
   const height = 500;
@@ -11,9 +11,22 @@ function App() {
     fetch(`http://localhost:8000/api/julia/${min_x}/${max_x}/${min_y}/${max_y}/${comp_const_re}/${comp_const_im}/`)
       .then(response => response.json())
       .then(result => {
-        setData(result.data);
         drawJuliaSet(result.data);
       });
+  }
+
+  function getColor(iterations) {
+    const max_iterations = 95
+    if (iterations === max_iterations) {
+      return 'rgb(0, 0, 0)'; // 黒色でフラクタルの外側を描画
+    } else {
+      const hue = 240 - (iterations * 240 / max_iterations);
+      const saturation = 100;
+      const lightness = 30 + (iterations / max_iterations) * 40;
+
+      return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    }
+
   }
 
   function drawJuliaSet(data) {
@@ -21,16 +34,17 @@ function App() {
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const iterations = data[y][x];
-        const colorValue = 255 - Math.floor((iterations / 64) * 255);
-        ctx.fillStyle = `rgb(${colorValue}, ${colorValue}, ${colorValue})`;
+        const color = getColor(iterations);
+        ctx.fillStyle = color;
         ctx.fillRect(x, y, 1, 1);
       }
     }
   }
 
+
   return (
     <div className="App">
-      <button onClick={() => fetchJuliaData(-1.5, 1.5, -1.5, 1.5, -0.33, 0.64)}>Load Julia Set</button>
+      <button onClick={() => fetchJuliaData(-1.5, 1.5, -1.5, 1.5, 0.45, 0.1428)}>Load Julia Set</button>
       <canvas ref={canvasRef} width={width} height={height}></canvas>
     </div>
   );

@@ -10,7 +10,7 @@ def julia_set(request, min_x, max_x, min_y, max_y, comp_const_re, comp_const_im)
     constant = complex(float(comp_const_re), float(comp_const_im))
     width = 500
     height = 500
-    max_iterations = 64
+    max_iterations = 95
 
     def julia(z, i=0):
         z = z * z + constant
