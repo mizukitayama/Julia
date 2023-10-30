@@ -1,8 +1,13 @@
-
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 const Main = () => {
-  const canvasRef = React.useRef(null);
+  const canvasRef = useRef(null);
+  const minXRef = useRef(null);
+  const maxXRef = useRef(null);
+  const minYRef = useRef(null);
+  const maxYRef = useRef(null);
+  const compConstReRef = useRef(null);
+  const compConstImRef = useRef(null);
   const width = 500;
   const height = 500;
 
@@ -40,12 +45,32 @@ const Main = () => {
     }
   }
 
+  const handleSubmit = (event) => {
+    console.log('hihi')
+    event.preventDefault();
+    const min_x = parseFloat(minXRef.current.value);
+    const max_x = parseFloat(maxXRef.current.value);
+    const min_y = parseFloat(minYRef.current.value);
+    const max_y = parseFloat(maxYRef.current.value);
+    const comp_const_re = parseFloat(compConstReRef.current.value);
+    const comp_const_im = parseFloat(compConstImRef.current.value);
+    fetchJuliaData(min_x, max_x, min_y, max_y, comp_const_re, comp_const_im);
+  };
+
   return (
     <div>
-      <button onClick={() => fetchJuliaData(-1.5, 1.5, -1.5, 1.5, 0.45, 0.1428)}>Load Julia Set</button>
+      <div>
+        <input type='number' ref={minXRef} placeholder='Min X' defaultValue='-1.5' />
+        <input type='number' ref={maxXRef} placeholder='Max X' defaultValue='1.5' />
+        <input type='number' ref={minYRef} placeholder='Min Y' defaultValue='-1.5' />
+        <input type='number' ref={maxYRef} placeholder='Max Y' defaultValue='1.5' />
+        <input type='number' step='0.01' ref={compConstReRef} placeholder='Real part of complex constant' defaultValue='0.45' />
+        <input type='number' step='0.01' ref={compConstImRef} placeholder='Imaginary part of complex constant' defaultValue='0.1428' />
+      </div>
+      <button onClick={handleSubmit}>Load Julia Set</button>
       <canvas ref={canvasRef} width={width} height={height}></canvas>
     </div>
-  )
-}
+  );
+};
 
 export default Main;
