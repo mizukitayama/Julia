@@ -19,5 +19,5 @@ from julia_fractal import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^api/julia/(?P<min_x>[-\d.]+)/(?P<max_x>[-\d.]+)/(?P<min_y>[-\d.]+)/(?P<max_y>[-\d.]+)/(?P<comp_const_re>[-\d.]+)/(?P<comp_const_im>[-\d.]+)/$', views.julia_set),
+    re_path(r'^api/julia/(?P<min_x>[-\d.]+)/(?P<max_x>[-\d.]+)/(?P<min_y>[-\d.]+)/(?P<max_y>[-\d.]+)/(?P<comp_const>[-\d.]+[+-]\d*\.?\d*j)/$', views.julia_set),
 ]
