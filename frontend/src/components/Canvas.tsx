@@ -1,15 +1,22 @@
 import React, { useRef, useEffect } from 'react';
 
-const Canvas = ({ data, width, height }) => {
-  const canvasRef = useRef(null);
+interface CanvasProps {
+  data: number[][] | null;
+  width: number;
+  height: number;
+}
+
+const Canvas: React.FC<CanvasProps> = ({ data, width, height }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (data) {
       drawJuliaSet();
     }
+    // eslint-disable-next-line
   }, [data]);
 
-  function getColor(iterations) {
+  const getColor = (iterations: number) => {
     const max_iterations = 95
     if (iterations === max_iterations) {
       return 'rgb(0, 0, 0)';
@@ -24,7 +31,9 @@ const Canvas = ({ data, width, height }) => {
   }
 
   const drawJuliaSet = () => {
-    const ctx = canvasRef.current.getContext('2d');
+    const ctx = canvasRef.current?.getContext('2d');
+    if (!ctx) return;
+    if (!data) return;
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const iterations = data[y][x];

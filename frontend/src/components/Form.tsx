@@ -1,19 +1,23 @@
-import React, { useRef } from 'react';
+import React, { useRef, FC, FormEvent } from 'react';
 
-const Form = ({ onSubmit }) => {
-  const minXRef = useRef(null);
-  const maxXRef = useRef(null);
-  const minYRef = useRef(null);
-  const maxYRef = useRef(null);
-  const compConstRef = useRef(null);
+interface Props {
+  onSubmit: (min_x: number, max_x: number, min_y: number, max_y: number, comp_const: string) => void;
+}
 
-  const handleSubmit = (event) => {
+const Form: FC<Props> = ({ onSubmit }) => {
+  const minXRef = useRef<HTMLInputElement>(null);
+  const maxXRef = useRef<HTMLInputElement>(null);
+  const minYRef = useRef<HTMLInputElement>(null);
+  const maxYRef = useRef<HTMLInputElement>(null);
+  const compConstRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const min_x = parseFloat(minXRef.current.value);
-    const max_x = parseFloat(maxXRef.current.value);
-    const min_y = parseFloat(minYRef.current.value);
-    const max_y = parseFloat(maxYRef.current.value);
-    const comp_const = compConstRef.current.value;
+    const min_x = parseFloat(minXRef.current!.value);
+    const max_x = parseFloat(maxXRef.current!.value);
+    const min_y = parseFloat(minYRef.current!.value);
+    const max_y = parseFloat(maxYRef.current!.value);
+    const comp_const = compConstRef.current!.value;
     onSubmit(min_x, max_x, min_y, max_y, comp_const);
   };
 
