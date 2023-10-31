@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 const Main = () => {
+  const [error, setError] = useState(null);
   const canvasRef = useRef(null);
   const minXRef = useRef(null);
   const maxXRef = useRef(null);
@@ -12,9 +13,20 @@ const Main = () => {
 
   function fetchJuliaData(min_x, max_x, min_y, max_y, comp_const) {
     fetch(`http://localhost:8000/api/julia/${min_x}/${max_x}/${min_y}/${max_y}/${comp_const}/`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(errData => {
+            throw new Error(errData.error || '予期せぬエラーが発生しました。');
+          });
+        }
+        return response.json();
+      })
       .then(result => {
+        setError(null)
         drawJuliaSet(result.data);
+      })
+      .catch(error => {
+        setError(error.message);
       });
   }
 
@@ -56,17 +68,39 @@ const Main = () => {
   };
 
   return (
-    <div>
-      <div>
-        <input type='number' ref={minXRef} placeholder='Min X' defaultValue='-1.5' />
-        <input type='number' ref={maxXRef} placeholder='Max X' defaultValue='1.5' />
-        <input type='number' ref={minYRef} placeholder='Min Y' defaultValue='-1.5' />
-        <input type='number' ref={maxYRef} placeholder='Max Y' defaultValue='1.5' />
-        <input type='text' ref={compConstRef} placeholder='Real part of complex constant' defaultValue='0.45+0.1428j' />
-      </div>
-      <button onClick={handleSubmit}>Load Julia Set</button>
+    <>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            実数部最小値
+            <input type='text' ref={minXRef} placeholder='min_x' defaultValue='-1.5' />
+          </label>
+          <label>
+            実数部最大値
+            <input type='text' ref={maxXRef} placeholder='max_x' defaultValue='1.5' />
+          </label>
+        </div>
+        <div>
+          <label>
+            虚数部最小値
+            <input type='text' ref={minYRef} placeholder='min_y' defaultValue='-1.5' />
+          </label>
+          <label>
+            虚数部最大値
+            <input type='text' ref={maxYRef} placeholder='max_y' defaultValue='1.5' />
+          </label>
+        </div>
+        <div>
+          <label>
+            複素定数の実数部
+            <input type='text' ref={compConstRef} placeholder='comp_const' defaultValue='0.45+0.1428j' />
+          </label>
+        </div>
+        <input type="submit" value="描画" />
+      </form>
+      <div>{error}</div>
       <canvas ref={canvasRef} width={width} height={height}></canvas>
-    </div>
+    </>
   );
 };
 

@@ -2,14 +2,14 @@
 import React from 'react';
 import './App.css';
 import Main from './components/main';
-import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Link, Switch, Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Link to="/satori/julia">
-        <Main />
-      </Link>
+      <Routes>
+        <Route path="/satori/julia/" element={<Main />} />
+      </Routes>
     </BrowserRouter>
   )
 }

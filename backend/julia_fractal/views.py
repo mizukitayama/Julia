@@ -1,16 +1,36 @@
 from django.http import JsonResponse
+import re, math
 
 def julia_set(request, min_x, max_x, min_y, max_y, comp_const):
-    print(min_x, max_x, min_y, max_y, comp_const)
     try:
         min_x = float(min_x)
         max_x = float(max_x)
         min_y = float(min_y)
         max_y = float(max_y)
+
+        if any(math.isnan(val) for val in [min_x, max_x, min_y, max_y]):
+            response = JsonResponse({"error": "実数部最小値min_x、実数部最大値max_x、虚数部最小値min_y、虚数部最大値max_yを入力してください。"}, status=400)
+            response["Access-Control-Allow-Origin"] = "*"
+            return response
+
+        if not re.match(r'^[-\d.]+[+-]\d*\.?\d*j$', comp_const):
+            response = JsonResponse({"error": "複素定数のフォーマットが不適切です。正しいフォーマットで入力してください。"}, status=400)
+            response["Access-Control-Allow-Origin"] = "*"
+            return response
         constant = complex(comp_const)
     except ValueError as e:
-        return JsonResponse({"error": str(e)}, status=400)
+        response = JsonResponse({"error": "実数部最小値min_x、実数部最大値max_x、虚数部最小値min_y、虚数部最大値max_yは数字で入力してください。"}, status=400)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
 
+    if min_x >= max_x:
+        response = JsonResponse({"error": "実数部最小値min_xは実数部最大値max_xよりも小さい値を入力してください."}, status=400)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+    if min_y >= max_y:
+        response = JsonResponse({"error": "虚数部最小値min_yは虚数部最大値max_yよりも小さい値を入力してください。"}, status=400)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
     width = 500
     height = 500
     max_iterations = 95
