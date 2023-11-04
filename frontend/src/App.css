@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+  height: 100vh;
+}
+
+.form {
+  border-right: 1px solid #f0f0f0;
+  height: 100%;
+  padding: 24px;
+}
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.input-unit {
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 8px;
+}

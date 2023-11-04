@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import Form from './Form';
 import Canvas from './Canvas';
 import ErrorMessage from './ErrorMessage';
+import '../App.css';
 
-const Main = () => {
+const Main: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<number[][] | null>(null);
-  const width: number = 500;
+  const width = 500;
   const height = 500;
 
   const fetchJuliaData = (min_x: number, max_x: number, min_y: number, max_y: number, comp_const: string) => {
@@ -31,9 +32,15 @@ const Main = () => {
 
   return (
     <>
-      <Form onSubmit={fetchJuliaData} />
-      {error && <ErrorMessage message={error} />}
-      <Canvas data={data} width={width} height={height} />
+      <div className='wrapper'>
+        <div className='form'>
+          <Form onSubmit={fetchJuliaData} />
+          {error && <ErrorMessage message={error} />}
+        </div>
+        <div>
+          {data && <Canvas data={data} width={width} height={height} />}
+        </div>
+      </div>
     </>
   );
 };
