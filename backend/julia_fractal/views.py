@@ -9,12 +9,12 @@ def julia_set(request, min_x, max_x, min_y, max_y, comp_const):
         max_y = float(max_y)
 
         if any(math.isnan(val) for val in [min_x, max_x, min_y, max_y]):
-            response = JsonResponse({"error": "実数部最小値min_x、実数部最大値max_x、虚数部最小値min_y、虚数部最大値max_yを入力してください。"}, status=400)
+            response = JsonResponse({"error": "実数部最小値、実数部最大値、虚数部最小値、虚数部最大値を数字で入力してください。"}, status=400)
             response["Access-Control-Allow-Origin"] = "*"
             return response
 
         if not re.match(r'^[-\d.]+[+-]\d*\.?\d*j$', comp_const):
-            response = JsonResponse({"error": "複素定数のフォーマットが不適切です。正しいフォーマットで入力してください。"}, status=400)
+            response = JsonResponse({"error": "複素定数のフォーマットが不適切です。正しいフォーマットで入力してください。（虚数部分はjで入力）"}, status=400)
             response["Access-Control-Allow-Origin"] = "*"
             return response
         constant = complex(comp_const)

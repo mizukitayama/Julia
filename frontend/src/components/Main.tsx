@@ -11,6 +11,10 @@ const Main: React.FC = () => {
   const height = 500;
 
   const fetchJuliaData = (min_x: number, max_x: number, min_y: number, max_y: number, comp_const: string) => {
+    if (comp_const === '') {
+      // 空欄の場合リクエストが通らないため、blankを送りエラーメッセージを受け取る
+      comp_const = 'blank';
+    }
     fetch(`http://localhost:8000/api/julia/${min_x}/${max_x}/${min_y}/${max_y}/${comp_const}/`)
       .then(response => {
         if (!response.ok) {
