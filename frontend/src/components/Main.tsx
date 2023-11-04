@@ -30,7 +30,7 @@ const Main: React.FC = () => {
       })
       .catch(error => {
         setError(error.message);
-        setData(null);
+        // setData(null);
       });
   }
 

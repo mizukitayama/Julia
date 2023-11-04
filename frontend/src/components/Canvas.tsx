@@ -40,7 +40,11 @@ const Canvas: React.FC<CanvasProps> = ({ data, width, height }) => {
   }, [data, width, height, getColor]);
 
 
-  return <canvas ref={canvasRef} width={width} height={height}></canvas>;
+  return (
+    <div>
+      <canvas ref={canvasRef} width={width} height={height}></canvas>
+    </div>
+  )
 };
 
 export default Canvas;

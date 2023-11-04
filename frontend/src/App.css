@@ -45,9 +45,8 @@
 }
 
 .form {
-  border-right: 1px solid #f0f0f0;
-  height: 100%;
   padding: 24px;
+  width: 300px;
 }
 
 .input {
@@ -60,4 +59,12 @@
 .input-unit {
   border-bottom: 1px solid #f0f0f0;
   margin-bottom: 8px;
+}
+
+.error-message {
+  word-wrap: break-word; 
+  max-width: 100%;
+  margin-top: 24px;
+  color: red;
+  font-size: small;
 }

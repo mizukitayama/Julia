@@ -14,7 +14,7 @@ def julia_set(request, min_x, max_x, min_y, max_y, comp_const):
             return response
 
         if not re.match(r'^[-\d.]+[+-]\d*\.?\d*j$', comp_const):
-            response = JsonResponse({"error": "複素定数のフォーマットが不適切です。正しいフォーマットで入力してください。（虚数部分はjで入力）"}, status=400)
+            response = JsonResponse({"error": "複素定数のフォーマットが不適切です。正しいフォーマットで入力してください。（虚数単位はjで入力）"}, status=400)
             response["Access-Control-Allow-Origin"] = "*"
             return response
         constant = complex(comp_const)
