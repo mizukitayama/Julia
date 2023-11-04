@@ -7,6 +7,13 @@ import '../App.css';
 const Main: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<number[][] | null>(null);
+  const [requestInfo, setRequestInfo] = useState<{ min_x: number | null, max_x: number | null, min_y: number | null, max_y: number | null, comp_const: string | null }>({
+    min_x: null,
+    max_x: null,
+    min_y: null,
+    max_y: null,
+    comp_const: null
+  });
   const width = 500;
   const height = 500;
 
@@ -27,10 +34,10 @@ const Main: React.FC = () => {
       .then(result => {
         setError(null);
         setData(result.data);
+        setRequestInfo(result.request);
       })
       .catch(error => {
         setError(error.message);
-        // setData(null);
       });
   }
 
@@ -42,7 +49,7 @@ const Main: React.FC = () => {
           {error && <ErrorMessage message={error} />}
         </div>
         <div>
-          {data && <Canvas data={data} width={width} height={height} />}
+          {data && requestInfo && <Canvas data={data} width={width} height={height} requestInfo={requestInfo} />}
         </div>
       </div>
     </>

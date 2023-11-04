@@ -1,4 +1,4 @@
-import React, { useRef, FC, FormEvent } from 'react';
+import React, { useRef, FormEvent } from 'react';
 import '../App.css';
 
 interface onSubmitProps {

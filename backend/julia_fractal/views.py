@@ -53,6 +53,6 @@ def julia_set(request, min_x, max_x, min_y, max_y, comp_const):
             row.append(iterations)
         data.append(row)
 
-    response = JsonResponse({"data": data})
+    response = JsonResponse({"data": data, "request": {"min_x": min_x, "max_x": max_x, "min_y": min_y, "max_y": max_y, "comp_const": comp_const}})
     response["Access-Control-Allow-Origin"] = "*"
     return response

@@ -4,9 +4,16 @@ interface CanvasProps {
   data: number[][] | null;
   width: number;
   height: number;
+  requestInfo: {
+    min_x: number | null;
+    max_x: number | null;
+    min_y: number | null;
+    max_y: number | null;
+    comp_const: string | null;
+  };
 }
 
-const Canvas: React.FC<CanvasProps> = ({ data, width, height }) => {
+const Canvas: React.FC<CanvasProps> = ({ data, width, height, requestInfo }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const getColor = useCallback((iterations: number) => {
     const max_iterations = 95
@@ -19,8 +26,6 @@ const Canvas: React.FC<CanvasProps> = ({ data, width, height }) => {
 
       return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     }
-
-
   }, []);
   
   useEffect(() => {
@@ -41,8 +46,11 @@ const Canvas: React.FC<CanvasProps> = ({ data, width, height }) => {
 
 
   return (
-    <div>
+    <div className='canvas'>
       <canvas ref={canvasRef} width={width} height={height}></canvas>
+      <div>複素定数の実数部 : {requestInfo.comp_const}</div>
+      <div>実数部 : {requestInfo.min_x} ~ {requestInfo.max_x}</div>
+      <div>虚数部 : {requestInfo.min_y} ~ {requestInfo.max_y}</div>
     </div>
   )
 };
