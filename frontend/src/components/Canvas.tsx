@@ -48,7 +48,7 @@ const Canvas: React.FC<CanvasProps> = ({ data, width, height, requestInfo }) => 
   return (
     <div className='canvas'>
       <canvas ref={canvasRef} width={width} height={height}></canvas>
-      <div>複素定数の実数部 : {requestInfo.comp_const}</div>
+      <div>複素定数 : {requestInfo.comp_const}</div>
       <div>実数部 : {requestInfo.min_x} ~ {requestInfo.max_x}</div>
       <div>虚数部 : {requestInfo.min_y} ~ {requestInfo.max_y}</div>
     </div>

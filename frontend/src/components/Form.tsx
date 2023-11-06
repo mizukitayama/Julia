@@ -66,7 +66,7 @@ const Form: React.FC<onSubmitProps> = ({ onSubmit }) => {
         <div>
           <label className='input'>
             <div>
-              複素定数の実数部
+              複素定数
             </div>
             <input type='text' ref={compConstRef} placeholder='comp_const' defaultValue='0.45+0.1428j' />
           </label>
